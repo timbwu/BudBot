@@ -1,44 +1,31 @@
 # bot.py
 import os
 import random
-
-import discord
 from dotenv import load_dotenv
 
+from discord.ext import commands
+
 load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN')
-GUILD = os.getenv('DISCORD_GUILD')
+token = os.getenv('DISCORD_TOKEN')
 
-client = discord.Client()  # client obj connection to discord
+bot = commands.Bot(command_prefix='!')
 
-@client.event
+
+@bot.event
 async def on_ready():
-    print(f'{client.user.name} has connected to Discord!')
+    print(f'{bot.user.name} has connected to Discord!')
 
-# Member dm
-@client.event
-async def on_member_join(member):
-    await member.create_dm()
-    await member.dm_channel.send(
-        f'Hi {member.name}, CODE AND ALGORITHMS BUD'
-    )
 
-# Member command response
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-
-    randReply = [
-        'Im number one',
-        'FRANK',
-        'Im a tree'
+@bot.command(name='talk', help='Responds with a random message')
+async def gibb(mes):
+    randText = [
+        'Im one',
+        'Im fast',
+        'slow down boy',
     ]
 
-    if message.content == '!p':
-        response = random.choice(randReply)
-        await message.channel.send(response)
-    elif message.content == 'raise-exception':
-        raise discord.DiscordException
+    response = random.choice(randText)
+    await mes.send(response)
 
-client.run(TOKEN)
+bot.run(token)
+
