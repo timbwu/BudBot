@@ -16,6 +16,22 @@ bot = commands.Bot(command_prefix='!')
 async def on_ready():
     print(f'{bot.user.name} has connected to Discord!')
 
+# command permission
+@bot.event
+async def on_command_error(res, error):
+    if isinstance(error, commands.errors.CheckFailure):
+        await res.send('You do not have permission to use this command.')
+
+# create channel
+@bot.command(name='create-channel')
+@commands.has_role('Admin')
+async def create_channel(res, channel_name):
+    guild = res.guild
+    existing_channel = discord.utils.get(guild.channels, name=channel_name)
+    if not existing_channel:
+        print(f'Creating a new channel: {channel_name}')
+        await guild.create_text_channel(channel_name)
+
 # random message
 @bot.command(name='talk', help='Responds with a random message.')
 async def gibb(res):
