@@ -23,7 +23,7 @@ async def on_command_error(res, error):
         await res.send('You do not have permission to use this command.')
 
 # create channel
-@bot.command(name='create-channel')
+@bot.command(name='create-channel', help='Creates a new text channel')
 @commands.has_role('Admin')
 async def create_channel(res, channel_name):
     guild = res.guild
@@ -31,6 +31,10 @@ async def create_channel(res, channel_name):
     if not existing_channel:
         print(f'Creating a new channel: {channel_name}')
         await guild.create_text_channel(channel_name)
+        await res.send('{.mention} created!'.format(discord.utils.get(guild.channels, name=channel_name)))
+    else:
+        print(f'Channel already exists')
+        await res.send('{.mention} channel already exists'.format(existing_channel))
 
 # random message
 @bot.command(name='talk', help='Responds with a random message.')
@@ -44,7 +48,7 @@ async def gibb(res):
     await res.send(response)
 
 # roll dice
-@bot.command(name='rolldice', help='Simulates rolling dice.')
+@bot.command(name='roll-dice', help='Simulates rolling dice.')
 async def roll(res, number_of_dice: int, number_of_sides: int):
     dice = [
         str(random.choice(range(1, number_of_sides + 1)))
