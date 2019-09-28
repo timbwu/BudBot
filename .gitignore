@@ -1,8 +1,8 @@
+# Ignore Mac system files
 .DS_Store
 
-*.class
-*.obj
-
-*.o
+# Ignore API related keys
 *.env
+
+# Ignore error logs
 *.log
