@@ -1,0 +1,2 @@
+# BudBot
+Python discord bot
