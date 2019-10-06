@@ -6,3 +6,6 @@
 
 # Ignore error logs
 *.log
+
+# Ignore pycache
+*.pyc
