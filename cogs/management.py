@@ -7,12 +7,6 @@ class Management(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    # bot on load
-    @commands.Cog.listener()
-    async def on_ready(self):
-        await self.bot.change_presence(activity=discord.Game('CODE + ALGORITHMS'))
-        print(f'{self.bot.user.name} has connected to Discord.')
-
     # member join server
     @commands.Cog.listener()
     async def on_member_join(self, member):
@@ -54,7 +48,6 @@ class Management(commands.Cog):
     async def unban(self, ctx, *, member):
         banned_users = await ctx.guild.bans()
         member_name, member_discriminator = member.split('#')
-
         for ban_entry in banned_users:
             user = ban_entry.user
             if (user.name, user.discriminator) == (member_name, member_discriminator):
@@ -65,22 +58,29 @@ class Management(commands.Cog):
     # create channel command
     @commands.command(name='create-channel', help='Creates a new text channel')
     @commands.has_role('Admin')
-    async def create_channel(self, res, channel_name):
-        guild = res.guild
+    async def create_channel(self, ctx, channel_name):
+        guild = ctx.guild
         existing_channel = discord.utils.get(guild.channels, name=channel_name)
         if not existing_channel:
             print(f'Creating a new channel: {channel_name}')
             await guild.create_text_channel(channel_name)
-            await res.send('{.mention} created!'.format(discord.utils.get(guild.channels, name=channel_name)))
+            await ctx.send('{.mention} created!'.format(discord.utils.get(guild.channels, name=channel_name)))
         else:
             print(f'Channel already exists')
-            await res.send('{.mention} channel already exists'.format(existing_channel))
+            await ctx.send('{.mention} channel already exists'.format(existing_channel))
 
     # clear messages command
     @commands.command(name='clear', help='Clears channel messages.')
     @commands.has_role('Admin')
-    async def clear(self, ctx, amount=5):
+    async def clear(self, ctx, amount: int):
         await ctx.channel.purge(limit=amount)
+
+    # ** Error Handling ** #
+    # clear messages error
+    @clear.error
+    async def clear_error(self, ctx, error):
+        if isinstance(error, commands.MissingRequiredArgument):
+            await ctx.send('Please specify the number of messages to delete.')
 
 
 def setup(bot):

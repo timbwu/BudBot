@@ -16,42 +16,17 @@ class Fun(commands.Cog):
         ]
         await ctx.send(', '.join(dice))
 
-    # talk command
-    @commands.command(help='Responds with a random message.')
-    async def talk(self, ctx):
-        randText = [
-            'Im one',
-            'Im fast',
-            'slow down boy',
-        ]
-        response = random.choice(randText)
-        await ctx.send(response)
-
     # 8ball command
     @commands.command(help='Gives you an answer.')
     async def albert(self, ctx, *, question):
         responses = [
-            'As I see it, yes.',
-            'Ask again later.',
-            'Better not tell you now.',
-            'Cannot predict now.',
-            'Concentrate and ask again.',
-            'Don\'t count on it.',
-            'It is certain.',
-            'It is decidedly so.',
-            'Most likely.',
-            'My reply is no.',
-            'My sources say no.',
-            'Outlook is not so good.',
-            'Outlook good.',
-            'That will FAIL.',
-            'Signs point to yes.',
-            'Very doubtful.',
-            'Without a doubt.',
-            'Yes.',
-            'No.',
-            'Hahahaha...',
-            'OK OK OK.',
+            'NO, that will FAAAIL.',
+            'This shit doesn\'t work.',
+            'IS IT KLEEYAH WHAT IM TALKING ABOUT?',
+            'YEEEAAAAS.',
+            'NOOOOO.',
+            'Hahahahahaha...',
+            'OK OK OK OK.',
             'Go pound sand.',
         ]
         await ctx.send(f'{random.choice(responses)}')
