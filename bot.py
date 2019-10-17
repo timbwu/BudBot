@@ -10,7 +10,7 @@ token = os.getenv('DISCORD_TOKEN')
 
 # command trigger
 bot = commands.Bot(command_prefix='!')
-# status = cycle(['S', 'SO', 'SOY', 'SOYB', 'SOYBO', 'SOYBOY', '', 'SOYBOY', ''])
+# status = cycle(['1', '2', '3'])
 
 
 # bot ready
